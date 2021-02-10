@@ -1,0 +1,103 @@
+$w: 571px;
+
+.body {
+  font-family: 'Muli', sans-serif;
+  margin: 30px;
+}
+
+.sub {
+  font-size: 14px;
+  line-height: 30px;
+}
+
+.debug {
+  color: gray;
+  font: 11px/11px monospace;
+  min-width: 200px;
+}
+
+.title {
+  color: gray;
+  display: block;
+  font-size: 14px;
+  list-style-type: square;
+  margin: auto;
+  width: 570px;
+}
+
+.title li {
+  margin: 10px 0;
+}
+
+.typeahead {
+  border: 1px solid #999;
+  height: 62px;
+  margin: 20px auto;
+  width: $w;
+
+  input {
+    border: 0;
+    font-size: 20px;
+    font-weight: bold;
+    height: 58px;
+    margin: 0;
+    outline: none;
+    padding: 2px 0 2px 10px;
+    width: 70%;
+  }
+
+  > a {
+    background-color: #00ae4d;
+    color: #fff;
+    display: inline-block;
+    float: right;
+    font-size: 18px;
+    font-weight: normal;
+    height: 15px;
+    line-height: 18px;
+    margin: 8px 7px 7px;
+    padding: 15px 20px;
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+    width: 110px;
+
+    &.inactive {
+      background-color: #000;
+      pointer-events: none;
+    }
+  }
+
+  ul {
+    border: 1px solid #999;
+    border-top: 0;
+    font-size: 22px;
+    list-style: none;
+    margin: 0;
+    max-height: 300px;
+    overflow: auto;
+    padding: 0;
+    position: relative;
+    right: 1px;
+    top: 3px;
+    width: $w;
+
+    li {
+      align-items: center;
+      display: flex;
+
+      &:hover {
+        background-color: #f0f0f0;
+      }
+    }
+
+    a {
+      color: #000;
+      display: block;
+      flex: 1;
+      padding: 8px 10px;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+  }
+}
