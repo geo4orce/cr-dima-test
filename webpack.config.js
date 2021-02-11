@@ -12,7 +12,8 @@ if (ENV.NODE_ENV !== 'production') {
     }
     require('dotenv').config(config);
 }
-console.log('webpack env is', ENV.NODE_ENV);
+const mode = (!ENV.NODE_ENV || ENV.NODE_ENV === 'production') ? 'production' : 'development';
+console.log(`webpack env is: "${ENV.NODE_ENV}", so mode is set to "${mode}"`);
 const PKG = require(ENV.ROOT + '/package.json');
 
 // deps
@@ -22,7 +23,7 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 // export
 module.exports = {
-    mode: (!ENV.NODE_ENV || ENV.NODE_ENV === 'production') ? 'production' : 'development',
+    mode,
     devtool: 'inline-source-map',
     plugins: [
         new VueLoaderPlugin(),
