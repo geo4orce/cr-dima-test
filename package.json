@@ -9,7 +9,7 @@
   },
   "scripts": {
     "_clean": "rm -rf dist/*; rm -rf tmp/*",
-    "_dev_watch": "concurrently -p \"[{name}]\" -n \"WP,JEST,NODE\" -c \"bgBlue.bold,bgMagenta.bold,bgGreen.bold\" \"webpack --watch\" \"npm run test:watch\" \"npm run _server_watch\"",
+    "_dev_watch": "concurrently -p \"[{name}]\" -n \"WBPK,NODE\" -c \"bgBlue.bold,bgGreen.bold\" \"webpack --watch\" \"npm run _server_watch\"",
     "_node": "NODE_NEEDED=`cat .node-version`; NODE_CURRENT=`node -v`; if [[ $NODE_CURRENT == $NODE_NEEDED* ]] ; then echo 'Node OK'; else echo \"ERROR: need Node ${NODE_NEEDED}, found ${NODE_CURRENT}. Did you forget to run 'nvs use'?\"; exit 1; fi",
     "_npm:del": "rm -rf node_modules",
     "_npm:idev": "npm prune && npm install",
@@ -45,25 +45,25 @@
   },
   "dependencies": {
     "css-loader": "^5",
-    "dotenv": "^8.2.0",
-    "express": "^4.17.1",
-    "html-webpack-plugin": "^4",
-    "jquery": "^3.5.0",
-    "node-fetch": "^2.6.1",
-    "node-sass": "^4.13.1",
-    "sass-loader": "^10",
+    "dotenv": "^8",
+    "express": "^4",
+    "html-webpack-plugin": "^5",
+    "jquery": "^3",
+    "node-fetch": "^2",
+    "node-sass": "^5",
+    "postcss": "^8",
+    "sass-loader": "^11",
     "style-loader": "^2",
-    "url-loader": "^4.1.0",
-    "vue": "^2.6.11",
-    "vue-loader": "^15.9.1",
-    "vue-template-compiler": "^2.6.11",
-    "webpack": "^4.42.1",
-    "webpack-cli": "^3.3.11"
+    "vue": "^2",
+    "vue-loader": "^15",
+    "vue-template-compiler": "^2",
+    "webpack": "^5",
+    "webpack-cli": "^4"
   },
   "devDependencies": {
-    "concurrently": "^5.1.0",
+    "concurrently": "^5",
     "jest": "^26",
-    "nodemon": "^2.0.3"
+    "nodemon": "^2"
   },
   "private": true,
   "license": ""

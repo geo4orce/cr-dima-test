@@ -23,11 +23,6 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin');
 // export
 module.exports = {
     mode: (!ENV.NODE_ENV || ENV.NODE_ENV === 'production') ? 'production' : 'development',
-    entry: {
-        app: [
-            './src/index.js',
-        ],
-    },
     devtool: 'inline-source-map',
     plugins: [
         new VueLoaderPlugin(),
@@ -62,8 +57,7 @@ module.exports = {
         // new webpack.HotModuleReplacementPlugin(),
     ],
     output: {
-        filename: '[name].[chunkhash].js',
-        path: ENV.ROOT + '/dist',
+        // filename: '[name].[chunkhash].js',
         publicPath: '/',
     },
     module: {
@@ -88,7 +82,7 @@ module.exports = {
             }],
         }, {
             test: /\.(png|woff|woff2|eot|ttf|svg)$/,
-            loader: 'url-loader?limit=100000',
+            type: 'asset/resource',
         }],
     },
 };
