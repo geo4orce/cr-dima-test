@@ -9,25 +9,33 @@
                 </div>
             </div>
             <br/><br/>
-
             <div v-if="isEdit">
-                <textarea v-model="listStr" cols="100" rows="10">
-                </textarea>
-                <br/>
-                <button @click="doParse">
+                <button @click="doParse" type="button" class="btn btn-primary">
                     Save
                 </button>
+                <br/><br/>
+                <label for="listStr" class="form-label">
+                    List of URLs
+                </label>
+                <textarea v-model="listStr" rows="10" id="listStr" class="form-control">
+                </textarea>
+                <div class="form-text">
+                    One per line. Spacing doesn't matter.
+                </div>
             </div>
             <div v-else>
-                <button @click="doEdit">
+                <button @click="doEdit" type="button" class="btn btn-secondary">
                     Edit
                 </button>
-                <button @click="doStart">
-                    Fire
+                <button v-if="isRunning" @click="doStop" type="button" class="btn btn-danger">
+                    Stop
                 </button>
-                <br/>
-                <ol class="title">
-                    <li v-for="item in list">
+                <button v-else @click="doStart" type="button" class="btn btn-success">
+                    Start
+                </button>
+                <br/><br/>
+                <ol class="list-group">
+                    <li v-for="item in list" class="list-group-item">
                         {{ item.url }}<br/>
                         Status: {{ item.status }}
                     </li>
@@ -73,19 +81,21 @@
         methods: {
             doParse() {
                 this.isEdit = false;
+                localStorage.setItem('listStr', this.listStr);
                 this.list = this.listStr.trim().split("\n").map(item => {
+                    item = item.trim();
+                    if (!item) {
+                        return null;
+                    }
                     return {
                         url: item.trim(),
                         status: '',
                     };
-                });
-                localStorage.setItem('listStr', this.listStr);
+                }).filter(Boolean);
             },
             doEdit() {
+                this.doStop(); // just in case
                 this.isEdit = true;
-                this.listStr = this.list.map(item => {
-                    return item.url;
-                }).join("\n");
             },
             doReset() {
                 this.list = this.list.map(item => {
