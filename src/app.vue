@@ -15,7 +15,7 @@
                 </textarea>
                 <br/>
                 <button @click="doParse">
-                    Parse
+                    Save
                 </button>
             </div>
             <div v-else>
@@ -54,10 +54,10 @@
                 h1: PKG.description, // from ./index.js
                 version: PKG.version,
                 env: ENV.NODE_ENV,
-                isEdit: false,
+                isEdit: true,
                 isRunning: false,
                 current: 0,
-                listStr: '',
+                listStr: localStorage.getItem('listStr') || "http://cr.org\nhttps://cr.org/cars/honda\n",
                 list: [{
                     url: 'http://cr.org',
                     status: 'none',
@@ -79,6 +79,7 @@
                         status: '',
                     };
                 });
+                localStorage.setItem('listStr', this.listStr);
             },
             doEdit() {
                 this.isEdit = true;
