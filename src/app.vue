@@ -8,15 +8,31 @@
                     <div>Env: {{ env }}</div>
                 </div>
             </div>
-            <button @click="doStart" v-if="!isRunning">
-                Start
-            </button>
-            <ol class="title">
-                <li v-for="item in list">
-                    {{ item.url }}<br/>
-                    Status: {{ item.status }}
-                </li>
-            </ol>
+            <br/><br/>
+
+            <div v-if="isEdit">
+                <textarea v-model="listStr" cols="100" rows="10">
+                </textarea>
+                <br/>
+                <button @click="doParse">
+                    Parse
+                </button>
+            </div>
+            <div v-else>
+                <button @click="doEdit">
+                    Edit
+                </button>
+                <button @click="doStart">
+                    Fire
+                </button>
+                <br/>
+                <ol class="title">
+                    <li v-for="item in list">
+                        {{ item.url }}<br/>
+                        Status: {{ item.status }}
+                    </li>
+                </ol>
+            </div>
         </div>
     </div>
 </template>
@@ -38,40 +54,38 @@
                 h1: PKG.description, // from ./index.js
                 version: PKG.version,
                 env: ENV.NODE_ENV,
+                isEdit: false,
                 isRunning: false,
                 current: 0,
-                list: [
-                    {
-                        url:'https://www.consumerreports.org/cars/honda/',
-                        status: '',
-                    },
-                    {
-                        url:'https://www.consumerreports.org/cars/kia/',
-                        status: '',
-                    },
-                    {
-                        url:'https://www.consumerreports.org/cars/toyota/',
-                        status: '',
-                    },
-                    {
-                        url:'https://www.consumerreports.org/cars/burgers/',
-                        status: '',
-                    },
-                    {
-                        url:'https://www.consumerreports.org/cars/mazda/',
-                        status: '',
-                    },
-                    {
-                        url:'https://www.consumerreports.org/cars/ford/',
-                        status: '',
-                    },
-                ],
+                listStr: '',
+                list: [{
+                    url: 'http://cr.org',
+                    status: 'none',
+                }, {
+                    url: 'abc.com',
+                    status: 'none',
+                }],
                 debug: false, // set form the URL
             };
         },
         computed: {
         },
         methods: {
+            doParse() {
+                this.isEdit = false;
+                this.list = this.listStr.trim().split("\n").map(item => {
+                    return {
+                        url: item.trim(),
+                        status: '',
+                    };
+                });
+            },
+            doEdit() {
+                this.isEdit = true;
+                this.listStr = this.list.map(item => {
+                    return item.url;
+                }).join("\n");
+            },
             doReset() {
                 this.list = this.list.map(item => {
                     item.status = '';

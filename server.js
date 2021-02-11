@@ -47,14 +47,15 @@ app.get('/proxy', function (req, res) {
     const url = req.query.url;
     util.log('GET /proxy ' + url);
 
+    res.setHeader('Content-Type', 'application/json');
+    let status = 'none';
     fetch(url).then(r => {
-        const status = r.status + ' ' + r.statusText;
-        util.log(status);
-        res.setHeader('Content-Type', 'application/json');
-        res.send(JSON.stringify({status}));
+        status = `${r.status} (${r.statusText})`;
     }).catch(err => {
-        util.log(err);
-        res.send('');
+        status = 'Proxy Error: ' + err;
+    }).finally(() => {
+        util.log(status);
+        res.send(JSON.stringify({status}));
     });
 });
 
