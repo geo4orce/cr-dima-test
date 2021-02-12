@@ -6,13 +6,11 @@
                 <h1>{{ h1 }}</h1>
                 <div class="subtext">
                     <div>
-                        Version: v{{ version }}
+                        v{{ version }}
                     </div>
-                    <div>
-                        <a href="https://github.com/geo4orce/cr-dima-test" target="_blank">
-                            GitHub
-                        </a>
-                    </div>
+                    <a href="https://github.com/geo4orce/cr-dima-test" target="_blank">
+                        GitHub
+                    </a>
                     <div v-if="env !== 'production'">
                         Env: {{ env }}
                     </div>
@@ -232,6 +230,7 @@ export default {
     margin-bottom: 30px;
 }
 .header {
+    align-items: center;
     display: flex;
     justify-content: space-between;
 }
