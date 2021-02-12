@@ -2,7 +2,7 @@
 
 Ping a list of URLs to ensure they are alive.
 
-![example](docs/example.png)
+![example](docs/sample.png)
 
 http://cr-dima-test.herokuapp.com/
 
