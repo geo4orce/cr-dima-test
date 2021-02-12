@@ -29,7 +29,6 @@ app.listen(PORT, function () {
 
 /////////////////////// ROUTES ///////////////////////
 
-// init
 app.get('/', function (req, res) {
     util.log('GET /index');
     res.sendFile('index.html', sendFileOptions);
@@ -41,15 +40,13 @@ app.get('/favicon.ico', function (req, res) {
         dotfiles: 'deny',
     });
 });
-
-// proxy
 app.get('/proxy', function (req, res) {
     const url = req.query.url;
     util.log('GET /proxy ' + url);
 
     res.setHeader('Content-Type', 'application/json');
     let status = 'none';
-    fetch(url).then(r => {
+    fetch(url, {method: 'HEAD'}).then(r => {
         status = `${r.status} (${r.statusText})`;
     }).catch(err => {
         status = 'Proxy Error: ' + err;
