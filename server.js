@@ -46,13 +46,18 @@ app.get('/proxy', function (req, res) {
 
     res.setHeader('Content-Type', 'application/json');
     let status = 'none';
+    let redirected = false;
     fetch(url, {method: 'HEAD'}).then(r => {
+        redirected = r.redirected;
         status = `${r.status} (${r.statusText})`;
     }).catch(err => {
         status = 'Proxy Error: ' + err;
     }).finally(() => {
         util.log(status);
-        res.send(JSON.stringify({status}));
+        res.send(JSON.stringify({
+            status,
+            redirected,
+        }));
     });
 });
 

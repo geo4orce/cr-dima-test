@@ -35,11 +35,12 @@
                     Start
                 </button>
                 <div class="summary">
-                    <span class="badge bg-dark">Total: {{ list.length }}</span>
-                    <span class="badge bg-primary">Processed: {{ listProcessed }}</span>
-                    <span class="badge bg-success">OK: {{ listOk }}</span>
-                    <span class="badge bg-warning">Warnings: {{ listWarnings }}</span>
-                    <span class="badge bg-danger">Errors: {{ listErrors }}</span>
+                    <span v-if="list.length" class="badge bg-dark">Total: {{ list.length }}</span>
+                    <span v-if="listProcessed" class="badge bg-primary">Processed: {{ listProcessed }}</span>
+                    <span v-if="listOk" class="badge bg-success">OK: {{ listOk }}</span>
+                    <span v-if="listRedirected" class="badge bg-info">Redirected: {{ listRedirected }}</span>
+                    <span v-if="listWarnings" class="badge bg-warning">Warnings: {{ listWarnings }}</span>
+                    <span v-if="listErrors" class="badge bg-danger">Errors: {{ listErrors }}</span>
                 </div>
             </div>
             <br/><br/>
@@ -51,6 +52,11 @@
                     </span>
                 </li>
             </ol>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row footer">
+            Copyright &copy; 2021 <a href="https://web-opt.com" target="_blank">Geo</a> &amp; Dima. All righty then.
         </div>
     </div>
 </div>
@@ -66,12 +72,16 @@
 const CR_HOST = 'https://www.consumerreports.org';
 const KEYS_JSON = ENV.KEYS_JSON || 'keys.json';
 const TESTING = 'testing...';
+const REDIRECTED = ', redirected';
 
 const isTesting = (text) => {
     return text === TESTING;
 };
 const isOk = (text) => {
     return text.indexOf('20') === 0;
+};
+const isRedirected = (text) => {
+    return text.indexOf(REDIRECTED) >= 0;
 };
 const isError = (text) => {
     return text.indexOf('40') === 0 || text.indexOf('50') === 0;
@@ -111,6 +121,11 @@ export default {
             return this.list.map(item => {
                 return item.status;
             }).filter(isOk).length;
+        },
+        listRedirected() {
+            return this.list.map(item => {
+                return item.status;
+            }).filter(isRedirected).length;
         },
         listWarnings() {
             return this.list.map(item => {
@@ -174,25 +189,27 @@ export default {
         },
         fetchNext() {
             if (!this.isRunning) {
-                console.log('not running!');
+                console.debug('not running. Stop!');
                 return;
             }
             const currentItem = this.list[this.current++];
             if (!currentItem) {
                 this.isRunning = false;
-                console.log('finished');
+                console.debug('finished');
                 return;
             }
             currentItem.status = TESTING;
             const url = '/proxy?url=' + encodeURIComponent(currentItem.url);
             fetch(url).then(res => {
-                console.log(currentItem.url, `${res.status} ${res.statusText}`);
+                console.debug(currentItem.url, `Proxy status: ${res.status} ${res.statusText}`);
                 return res.json();
             }).then(body => {
-                currentItem.status = body.status;
+                console.log('Proxy response', body);
+                currentItem.status = body.status + (body.redirected ? REDIRECTED : '');
+                console.debug('proceed to next');
                 this.fetchNext();
             }).catch(err => {
-                console.log('err', err);
+                console.log('fetch error', err);
             });
         }
     },
@@ -200,6 +217,9 @@ export default {
 </script>
 
 <style lang="scss">
+.body {
+    margin-bottom: 30px;
+}
 .btn-container {
 
 }
@@ -208,6 +228,22 @@ export default {
 
     > span {
         margin-right: 15px;
+    }
+}
+.footer {
+    color: lightgray;
+    font-size: 10px;
+    justify-content: center;
+    padding-top: 100px;
+
+    > a {
+        color: lightgray;
+        display: contents; // huh?
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+        }
     }
 }
 </style>

@@ -8,10 +8,15 @@ http://cr-dima-test.herokuapp.com/
 
 # TODO
 
-1) check for redirect hops (301 or 302)
-1) record speed/time
+1. record speed/time
 
 # Version History
+
+### v2.2.1
+Feb-12, 2021
+* add footer
+* hide sum badge if number is 0
+* check for redirects (301 or 302)
 
 ### v2.2.0
 Feb-12, 2021
