@@ -1,5 +1,9 @@
 # CR DIMA TEST
 
+Ping a list of URLs to ensure they are alive.
+
+![example](docs/example.png)
+
 http://cr-dima-test.herokuapp.com/
 
 # TODO
