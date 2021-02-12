@@ -2,10 +2,21 @@
 <div class="body">
     <div class="container-fluid">
         <div class="row">
-            <h1>{{ h1 }}</h1>
-            <div class="sub">
-                <div>Version: v{{ version }}</div>
-                <div>Env: {{ env }}</div>
+            <div class="header">
+                <h1>{{ h1 }}</h1>
+                <div class="subtext">
+                    <div>
+                        Version: v{{ version }}
+                    </div>
+                    <div>
+                        <a href="https://github.com/geo4orce/cr-dima-test" target="_blank">
+                            GitHub
+                        </a>
+                    </div>
+                    <div v-if="env !== 'production'">
+                        Env: {{ env }}
+                    </div>
+                </div>
             </div>
         </div>
         <br/><br/>
@@ -24,7 +35,7 @@
             </div>
         </div>
         <div v-else>
-            <div class="btn-container">
+            <div>
                 <button @click="doEdit" type="button" class="btn btn-secondary">
                     Edit
                 </button>
@@ -55,7 +66,7 @@
         </div>
     </div>
     <div class="container-fluid">
-        <div class="row footer">
+        <div class="row footer subtext">
             Copyright &copy; 2021 <a href="https://web-opt.com" target="_blank">Geo</a> &amp; Dima. All righty then.
         </div>
     </div>
@@ -220,8 +231,9 @@ export default {
 .body {
     margin-bottom: 30px;
 }
-.btn-container {
-
+.header {
+    display: flex;
+    justify-content: space-between;
 }
 .summary {
     float: right;
@@ -230,14 +242,12 @@ export default {
         margin-right: 15px;
     }
 }
-.footer {
+.subtext {
     color: lightgray;
-    font-size: 10px;
-    justify-content: center;
-    padding-top: 100px;
+    font-size: 12px;
 
-    > a {
-        color: lightgray;
+    a {
+        color: inherit;
         display: contents; // huh?
         text-decoration: none;
 
@@ -245,5 +255,9 @@ export default {
             text-decoration: underline;
         }
     }
+}
+.footer {
+    justify-content: center;
+    padding-top: 100px;
 }
 </style>

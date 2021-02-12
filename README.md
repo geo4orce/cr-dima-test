@@ -12,6 +12,12 @@ http://cr-dima-test.herokuapp.com/
 
 # Version History
 
+### v2.3.1
+Feb-12, 2021
+* update header looks
+* add github link
+* hide env for prod
+
 ### v2.3.0
 Feb-12, 2021
 * add footer
