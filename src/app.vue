@@ -204,7 +204,7 @@ export default {
                 console.debug(currentItem.url, `Proxy status: ${res.status} ${res.statusText}`);
                 return res.json();
             }).then(body => {
-                console.log('Proxy response', body);
+                console.debug('Proxy response', body);
                 currentItem.status = body.status + (body.redirected ? REDIRECTED : '');
                 console.debug('proceed to next');
                 this.fetchNext();
