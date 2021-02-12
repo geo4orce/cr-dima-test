@@ -12,7 +12,7 @@ http://cr-dima-test.herokuapp.com/
 
 # Version History
 
-### v2.2.1
+### v2.3.0
 Feb-12, 2021
 * add footer
 * hide sum badge if number is 0
