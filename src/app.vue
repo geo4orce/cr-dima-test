@@ -35,11 +35,11 @@
                     Start
                 </button>
                 <div class="summary">
-                    Total: <span class="badge bg-dark">{{ list.length }}</span>
-                    Processed: <span class="badge bg-primary">{{ listProcessed }}</span>
-                    OK: <span class="badge bg-success">{{ listOk }}</span>
-                    Warnings: <span class="badge bg-warning">{{ listWarnings }}</span>
-                    Errors: <span class="badge bg-danger">{{ listErrors }}</span>
+                    <span class="badge bg-dark">Total: {{ list.length }}</span>
+                    <span class="badge bg-primary">Processed: {{ listProcessed }}</span>
+                    <span class="badge bg-success">OK: {{ listOk }}</span>
+                    <span class="badge bg-warning">Warnings: {{ listWarnings }}</span>
+                    <span class="badge bg-danger">Errors: {{ listErrors }}</span>
                 </div>
             </div>
             <br/><br/>
