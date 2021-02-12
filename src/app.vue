@@ -37,7 +37,7 @@
                 <ol class="list-group">
                     <li v-for="item in list" class="list-group-item">
                         {{ item.url }}<br/>
-                        Status: {{ item.status }}
+                        Status: <span v-html="getStatusBadge(item.status)"></span>
                     </li>
                 </ol>
             </div>
@@ -79,6 +79,18 @@
         computed: {
         },
         methods: {
+            getStatusBadge(text) {
+                if (text === 'testing...') {
+                    return `<span class="badge bg-primary">${text}</span>`;
+                }
+                if (text.indexOf('200') === 0) {
+                    return `<span class="badge bg-success">${text}</span>`;
+                }
+                if (text.indexOf('40') === 0 || text.indexOf('50') === 0) {
+                    return `<span class="badge bg-danger">${text}</span>`;
+                }
+                return `<span class="badge bg-warning">${text}</span>`;
+            },
             doParse() {
                 this.isEdit = false;
                 localStorage.setItem('listStr', this.listStr);
