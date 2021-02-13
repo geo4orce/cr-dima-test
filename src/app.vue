@@ -54,9 +54,9 @@
             </div>
             <br/><br/>
             <ol class="list-group">
-                <li v-for="(item, idx) in list" class="list-group-item">
+                <li v-for="(item, idx) in list" :class="'list-group-item list-group-item-action list-group-item-' + getStatusColor(item.status)">
                     {{ item.url }}
-                    <span v-if="item.status" :class="getBadge(item.status)">
+                    <span v-if="item.status" :class="'badge bg-' + getStatusColor(item.status)">
                         {{ item.status }}
                     </span>
                     <div class="url-buttons">
@@ -154,20 +154,20 @@ export default {
         },
     },
     methods: {
-        getBadge(text) {
+        getStatusColor(text) {
             if (isTesting(text)) {
-                return 'badge bg-light';
+                return 'dark';
             }
             if (isOk(text)) {
-                return 'badge bg-success';
+                return 'success';
             }
             if (isError(text)) {
-                return 'badge bg-danger';
+                return 'danger';
             }
             if (isWarning(text)) {
-                return 'badge bg-warning';
+                return 'warning';
             }
-            return 'badge bg-dark';
+            return 'light';
         },
         doParse() {
             this.isEdit = false;
