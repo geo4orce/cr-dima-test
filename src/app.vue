@@ -19,7 +19,7 @@
         </div>
         <br/><br/>
         <div v-if="isEdit">
-            <button @click="doParse" type="button" class="btn btn-primary">
+            <button @click="doParse" type="button" class="btn btn-lg btn-primary">
                 Save
             </button>
             <br/><br/>
@@ -34,13 +34,13 @@
         </div>
         <div v-else>
             <div>
-                <button @click="doEdit" type="button" class="btn btn-secondary">
+                <button @click="doEdit" type="button" class="btn btn-lg btn-secondary">
                     Edit
                 </button>
-                <button v-if="isRunning" @click="doStop" type="button" class="btn btn-danger">
+                <button v-if="isRunning" @click="doStop" type="button" class="btn btn-lg btn-danger">
                     Stop
                 </button>
-                <button v-else @click="doStart" type="button" class="btn btn-success">
+                <button v-else @click="doStart" type="button" class="btn btn-lg btn-primary">
                     Start
                 </button>
                 <div class="summary">
@@ -54,11 +54,17 @@
             </div>
             <br/><br/>
             <ol class="list-group">
-                <li v-for="item in list" class="list-group-item">
+                <li v-for="(item, idx) in list" class="list-group-item">
                     {{ item.url }}
                     <span v-if="item.status" :class="getBadge(item.status)">
                         {{ item.status }}
                     </span>
+                    <div class="url-buttons">
+                        <button v-if="!isRunning && item.status !== TESTING" @click="doFetch(idx)" type="button" class="btn btn-sm btn-primary">
+                            &#9654;
+                        </button>
+                        <div v-if="item.status === TESTING" class="spinner-border spinner-border-sm" role="status"></div>
+                    </div>
                 </li>
             </ol>
         </div>
@@ -150,7 +156,7 @@ export default {
     methods: {
         getBadge(text) {
             if (isTesting(text)) {
-                return 'badge bg-primary';
+                return 'badge bg-light';
             }
             if (isOk(text)) {
                 return 'badge bg-success';
@@ -196,31 +202,37 @@ export default {
         doStop() {
             this.isRunning = false;
         },
-        fetchNext() {
+        async fetchNext() {
             if (!this.isRunning) {
                 console.debug('not running. Stop!');
                 return;
             }
-            const currentItem = this.list[this.current++];
-            if (!currentItem) {
+            const idx = this.current++;
+            if (!this.list[idx]) {
                 this.isRunning = false;
-                console.debug('finished');
+                console.debug(`index "${idx}" not found, so finishing.`);
                 return;
             }
+            await this.doFetch(idx);
+            this.fetchNext(); // self-recursive
+        },
+        doFetch(idx) {
+            const currentItem = this.list[idx];
             currentItem.status = TESTING;
             const url = '/proxy?url=' + encodeURIComponent(currentItem.url);
-            fetch(url).then(res => {
-                console.debug(currentItem.url, `Proxy status: ${res.status} ${res.statusText}`);
-                return res.json();
-            }).then(body => {
-                console.debug('Proxy response', body);
-                currentItem.status = body.status + (body.redirected ? REDIRECTED : '');
-                console.debug('proceed to next');
-                this.fetchNext();
+            return fetch(url).then(response => {
+                console.debug(currentItem.url, `Proxy response: ${response.status} ${response.statusText}`);
+                return response.json();
+            }).then(payload => {
+                console.debug('Proxy payload', payload);
+                currentItem.status = payload.status + (payload.redirected ? REDIRECTED : '');
             }).catch(err => {
                 console.log('fetch error', err);
             });
-        }
+        },
+    },
+    created() {
+        this.TESTING = TESTING; // make available in the template
     },
 };
 </script>
@@ -258,5 +270,12 @@ export default {
 .footer {
     justify-content: center;
     padding-top: 100px;
+}
+.url-buttons {
+    float: right;
+
+    button {
+        font-size: 7px;
+    }
 }
 </style>

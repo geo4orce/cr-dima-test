@@ -12,6 +12,10 @@ http://cr-dima-test.herokuapp.com/
 
 # Version History
 
+### v2.4.0
+Feb-13, 2021
+* add button and spinner for each row
+
 ### v2.3.1
 Feb-12, 2021
 * update header looks
