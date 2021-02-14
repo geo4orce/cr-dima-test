@@ -17,6 +17,7 @@ http://cr-dima-test.herokuapp.com/
 ### v2.5.1
 Feb-14, 2021
 * extract footer and header into v-once components
+* make each URL a clickable link
 
 ### v2.5.0
 Feb-14, 2021

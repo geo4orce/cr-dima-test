@@ -57,7 +57,9 @@
             <br/><br/>
             <ol class="list-group">
                 <li v-for="(item, idx) in list" class="list-group-item list-group-item-action">
-                    {{ item.url }}
+                    <a :href="item.url" target="_blank">
+                        {{ item.url }}
+                    </a>
                     <span v-if="item.status" :class="'badge bg-' + getStatusColor(item.status)">
                         {{ item.status }}
                     </span>
