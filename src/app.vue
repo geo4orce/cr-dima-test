@@ -92,6 +92,11 @@ import AppHeader from '/src/app/AppHeader.vue';
 // "vue-template-compiler" must be installed as a prod dependency
 // "webpack-cli" must be installed as a prod dependency
 
+const DEFAULT_URLS = [
+    'https://www.consumerreports.org/cars/kia/', // 200 OK
+    'http://cr.org/burgers', // 404 with redirect
+    'bad.url', // no good
+].join("\n");
 const TESTING = 'testing...';
 
 const isTesting = (text) => {
@@ -120,7 +125,7 @@ export default {
             isEdit: true,
             isRunning: false,
             list: [],
-            listStr: localStorage.getItem('listStr') || "http://cr.org\nhttps://cr.org/cars/honda\n",
+            listStr: localStorage.getItem('listStr') || DEFAULT_URLS,
         };
     },
     computed: {
