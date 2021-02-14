@@ -8,9 +8,10 @@ http://cr-dima-test.herokuapp.com/
 
 # TODO
 
-1. extract row item into a separate vue class
+1. extract each row item into a separate vue class
+   * do the same for edit/display views
 1. migrate to vue3
-  1. setup(), better reactivity (no need to Vue.set)
+   * setup(), better reactivity (no need to Vue.set)
 
 # Version History
 
