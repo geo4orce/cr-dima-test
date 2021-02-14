@@ -27,7 +27,7 @@ module.exports = {
     devtool: 'inline-source-map',
     plugins: [
         new VueLoaderPlugin(),
-        new webpack.ProvidePlugin({ // for bootstrap
+        new webpack.ProvidePlugin({ // for bootstrap?
             $: "jquery",
             jQuery: "jquery",
         }),

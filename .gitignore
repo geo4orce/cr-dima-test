@@ -1,12 +1,13 @@
-.env
-npm-debug.log
-
-/node_modules
+# compiled project
 /dist
 
-# intellij
-/.idea
-*.iml
+# local env
+.env
+
+# node
+/node_modules
+
+# sublime text
 *.sublime-workspace
 
 # mac
