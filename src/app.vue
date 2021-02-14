@@ -226,6 +226,7 @@ export default {
         doFetch(idx) {
             const currentItem = this.list[idx];
             currentItem.status = TESTING;
+            currentItem.redirected = false;
             const url = '/proxy?url=' + encodeURIComponent(currentItem.url);
             return fetch(url).then(response => {
                 console.debug(currentItem.url, `Proxy response: ${response.status} ${response.statusText}`);
