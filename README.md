@@ -8,7 +8,7 @@ http://cr-dima-test.herokuapp.com/
 
 # TODO
 
-1. record speed/time
+1. extract row item into a separate vue class
 
 # Version History
 
@@ -16,6 +16,7 @@ http://cr-dima-test.herokuapp.com/
 Feb-14, 2021
 * remove row highlights from the previous version -- too distracting
 * extract "redirected" out of the status - into a separate info (light blue) badge
+* record speed/time
 
 ### v2.4.1
 Feb-13, 2021

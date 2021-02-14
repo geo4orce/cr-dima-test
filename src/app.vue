@@ -62,6 +62,9 @@
                     <span v-if="listRedirected" class="badge bg-info">
                         Redirected: {{ listRedirected }}
                     </span>
+                    <span v-if="listTimer" class="badge bg-dark">
+                        Timer: {{ listTimer }} sec
+                    </span>
                 </div>
             </div>
             <br/><br/>
@@ -73,6 +76,9 @@
                     </span>
                     <span v-if="item.redirected" class="badge bg-info">
                         Redirected
+                    </span>
+                    <span v-if="item.timer" class="badge bg-dark">
+                        {{ item.timer }} ms
                     </span>
                     <div class="url-buttons">
                         <button v-if="!isRunning && item.status !== TESTING" @click="doFetch(idx)" type="button" class="btn btn-sm btn-primary">
@@ -157,6 +163,14 @@ export default {
                 return item.status;
             }).filter(isError).length;
         },
+        listTimer() {
+            const ms = this.list.map(item => {
+                return item.timer || 0;
+            }).reduce((a, b) => {
+                return a + b;
+            });
+            return Math.round(ms / 1000 * 10) / 10; // sec to the first decimal
+        },
     },
     methods: {
         getStatusColor(text) {
@@ -185,6 +199,7 @@ export default {
                 return { // must set every prop to be reactive!
                     redirected: false,
                     status: '',
+                    timer: '',
                     url: item.trim(),
                 };
             }).filter(Boolean);
@@ -197,6 +212,7 @@ export default {
             this.list = this.list.map(item => {
                 item.status = '';
                 item.redirected = false;
+                item.timer = '';
                 return item;
             });
             this.current = 0;
@@ -224,17 +240,21 @@ export default {
             this.fetchNext(); // self-recursive
         },
         doFetch(idx) {
-            const currentItem = this.list[idx];
-            currentItem.status = TESTING;
-            currentItem.redirected = false;
-            const url = '/proxy?url=' + encodeURIComponent(currentItem.url);
+            const item = this.list[idx];
+            item.redirected = false;
+            item.status = TESTING;
+            item.timer = '';
+            const t0 = performance.now();
+            const url = '/proxy?url=' + encodeURIComponent(item.url);
             return fetch(url).then(response => {
-                console.debug(currentItem.url, `Proxy response: ${response.status} ${response.statusText}`);
+                console.debug(item.url, `Proxy response: ${response.status} ${response.statusText}`);
                 return response.json();
             }).then(payload => {
                 console.debug('Proxy payload', payload);
-                currentItem.status = payload.status;
-                currentItem.redirected = payload.redirected;
+                item.status = payload.status;
+                item.redirected = payload.redirected;
+                const t1 = performance.now();
+                item.timer = Math.ceil(t1 - t0); // diff in ms
             }).catch(err => {
                 console.log('fetch error', err);
             });
