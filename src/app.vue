@@ -54,7 +54,7 @@
             </div>
             <br/><br/>
             <ol class="list-group">
-                <li v-for="(item, idx) in list" :class="'list-group-item list-group-item-action list-group-item-' + getStatusColor(item.status)">
+                <li v-for="(item, idx) in list" class="list-group-item list-group-item-action">
                     {{ item.url }}
                     <span v-if="item.status" :class="'badge bg-' + getStatusColor(item.status)">
                         {{ item.status }}
@@ -156,7 +156,7 @@ export default {
     methods: {
         getStatusColor(text) {
             if (isTesting(text)) {
-                return 'dark';
+                return 'light';
             }
             if (isOk(text)) {
                 return 'success';
@@ -167,7 +167,7 @@ export default {
             if (isWarning(text)) {
                 return 'warning';
             }
-            return 'light';
+            return 'dark';
         },
         doParse() {
             this.isEdit = false;

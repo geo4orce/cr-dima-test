@@ -12,6 +12,10 @@ http://cr-dima-test.herokuapp.com/
 
 # Version History
 
+### v2.5.0
+Feb-14, 2021
+* remove row highlights from the previous version -- too distracting
+
 ### v2.4.1
 Feb-13, 2021
 * add row highlights
