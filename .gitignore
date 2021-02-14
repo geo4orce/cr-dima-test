@@ -7,7 +7,7 @@ npm-debug.log
 # intellij
 /.idea
 *.iml
-*.sublime-*
+*.sublime-workspace
 
 # mac
 .DS_Store
