@@ -2,20 +2,7 @@
 <div class="body">
     <div class="container-fluid">
         <div class="row">
-            <div class="header">
-                <h1>{{ h1 }}</h1>
-                <div class="subtext">
-                    <div>
-                        v{{ version }}
-                    </div>
-                    <a href="https://github.com/geo4orce/cr-dima-test" target="_blank">
-                        GitHub
-                    </a>
-                    <div v-if="env !== 'production'">
-                        Env: {{ env }}
-                    </div>
-                </div>
-            </div>
+            <AppHeader v-once/>
         </div>
         <br/><br/>
         <div v-if="isEdit">
@@ -63,7 +50,7 @@
                         Redirected: {{ listRedirected }}
                     </span>
                     <span v-if="listTimer" class="badge bg-dark">
-                        Timer: {{ listTimer }} sec
+                        Time: {{ listTimer }} sec
                     </span>
                 </div>
             </div>
@@ -91,22 +78,18 @@
         </div>
     </div>
     <div class="container-fluid">
-        <div class="row footer subtext">
-            Copyright &copy; 2021 <a href="https://web-opt.com" target="_blank">Geo</a> &amp; Dima. All righty then.
-        </div>
+        <AppFooter v-once/>
     </div>
 </div>
 </template>
 
 <script>
+import AppFooter from '/src/app/AppFooter.vue';
+import AppHeader from '/src/app/AppHeader.vue';
+
 // "vue-template-compiler" must be installed as a prod dependency
 // "webpack-cli" must be installed as a prod dependency
 
-// declare const ENV;
-// declare const PKG;
-
-const CR_HOST = 'https://www.consumerreports.org';
-const KEYS_JSON = ENV.KEYS_JSON || 'keys.json';
 const TESTING = 'testing...';
 
 const isTesting = (text) => {
@@ -124,17 +107,18 @@ const isWarning = (text) => {
 
 export default {
     el: '#app',
+    components: {
+        AppFooter,
+        AppHeader,
+    },
     data: function () {
         return {
-            h1: PKG.description, // from ./index.js
-            version: PKG.version,
-            env: ENV.NODE_ENV,
+            current: 0,
+            // debug: false, // set form the URL (currently not used)
             isEdit: true,
             isRunning: false,
-            current: 0,
-            listStr: localStorage.getItem('listStr') || "http://cr.org\nhttps://cr.org/cars/honda\n",
             list: [],
-            debug: false, // set form the URL
+            listStr: localStorage.getItem('listStr') || "http://cr.org\nhttps://cr.org/cars/honda\n",
         };
     },
     computed: {
@@ -199,7 +183,7 @@ export default {
                 return { // must set every prop to be reactive!
                     redirected: false,
                     status: '',
-                    timer: '',
+                    timer: '', // @todo: consider Vue.set, or migrate to Vue3
                     url: item.trim(),
                 };
             }).filter(Boolean);
@@ -269,11 +253,6 @@ export default {
 <style lang="scss">
 .body {
     margin-bottom: 30px;
-}
-.header {
-    align-items: center;
-    display: flex;
-    justify-content: space-between;
 }
 .summary {
     float: right;

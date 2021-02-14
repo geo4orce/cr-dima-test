@@ -9,8 +9,14 @@ http://cr-dima-test.herokuapp.com/
 # TODO
 
 1. extract row item into a separate vue class
+1. migrate to vue3
+  1. setup(), better reactivity (no need to Vue.set)
 
 # Version History
+
+### v2.5.1
+Feb-14, 2021
+* extract footer and header into v-once components
 
 ### v2.5.0
 Feb-14, 2021
