@@ -44,12 +44,24 @@
                     Start
                 </button>
                 <div class="summary">
-                    <span v-if="list.length" class="badge bg-dark">Total: {{ list.length }}</span>
-                    <span v-if="listProcessed" class="badge bg-primary">Processed: {{ listProcessed }}</span>
-                    <span v-if="listOk" class="badge bg-success">OK: {{ listOk }}</span>
-                    <span v-if="listRedirected" class="badge bg-info">Redirected: {{ listRedirected }}</span>
-                    <span v-if="listWarnings" class="badge bg-warning">Warnings: {{ listWarnings }}</span>
-                    <span v-if="listErrors" class="badge bg-danger">Errors: {{ listErrors }}</span>
+                    <span v-if="list.length" class="badge bg-dark">
+                        Total: {{ list.length }}
+                    </span>
+                    <span v-if="listProcessed" class="badge bg-primary">
+                        Processed: {{ listProcessed }}
+                    </span>
+                    <span v-if="listOk" class="badge bg-success">
+                        OK: {{ listOk }}
+                    </span>
+                    <span v-if="listWarnings" class="badge bg-warning">
+                        Warnings: {{ listWarnings }}
+                    </span>
+                    <span v-if="listErrors" class="badge bg-danger">
+                        Errors: {{ listErrors }}
+                    </span>
+                    <span v-if="listRedirected" class="badge bg-info">
+                        Redirected: {{ listRedirected }}
+                    </span>
                 </div>
             </div>
             <br/><br/>
@@ -58,6 +70,9 @@
                     {{ item.url }}
                     <span v-if="item.status" :class="'badge bg-' + getStatusColor(item.status)">
                         {{ item.status }}
+                    </span>
+                    <span v-if="item.redirected" class="badge bg-info">
+                        Redirected
                     </span>
                     <div class="url-buttons">
                         <button v-if="!isRunning && item.status !== TESTING" @click="doFetch(idx)" type="button" class="btn btn-sm btn-primary">
@@ -87,16 +102,12 @@
 const CR_HOST = 'https://www.consumerreports.org';
 const KEYS_JSON = ENV.KEYS_JSON || 'keys.json';
 const TESTING = 'testing...';
-const REDIRECTED = ', redirected';
 
 const isTesting = (text) => {
     return text === TESTING;
 };
 const isOk = (text) => {
     return text.indexOf('20') === 0;
-};
-const isRedirected = (text) => {
-    return text.indexOf(REDIRECTED) >= 0;
 };
 const isError = (text) => {
     return text.indexOf('40') === 0 || text.indexOf('50') === 0;
@@ -116,13 +127,7 @@ export default {
             isRunning: false,
             current: 0,
             listStr: localStorage.getItem('listStr') || "http://cr.org\nhttps://cr.org/cars/honda\n",
-            list: [{
-                url: 'http://cr.org',
-                status: 'none',
-            }, {
-                url: 'abc.com',
-                status: 'none',
-            }],
+            list: [],
             debug: false, // set form the URL
         };
     },
@@ -138,9 +143,9 @@ export default {
             }).filter(isOk).length;
         },
         listRedirected() {
-            return this.list.map(item => {
-                return item.status;
-            }).filter(isRedirected).length;
+            return this.list.filter(item => {
+                return item.redirected;
+            }).length;
         },
         listWarnings() {
             return this.list.map(item => {
@@ -177,9 +182,10 @@ export default {
                 if (!item) {
                     return null;
                 }
-                return {
-                    url: item.trim(),
+                return { // must set every prop to be reactive!
+                    redirected: false,
                     status: '',
+                    url: item.trim(),
                 };
             }).filter(Boolean);
         },
@@ -190,6 +196,7 @@ export default {
         doReset() {
             this.list = this.list.map(item => {
                 item.status = '';
+                item.redirected = false;
                 return item;
             });
             this.current = 0;
@@ -225,7 +232,8 @@ export default {
                 return response.json();
             }).then(payload => {
                 console.debug('Proxy payload', payload);
-                currentItem.status = payload.status + (payload.redirected ? REDIRECTED : '');
+                currentItem.status = payload.status;
+                currentItem.redirected = payload.redirected;
             }).catch(err => {
                 console.log('fetch error', err);
             });

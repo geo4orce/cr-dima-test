@@ -15,6 +15,7 @@ http://cr-dima-test.herokuapp.com/
 ### v2.5.0
 Feb-14, 2021
 * remove row highlights from the previous version -- too distracting
+* extract "redirected" out of the status - into a separate info (light blue) badge
 
 ### v2.4.1
 Feb-13, 2021
