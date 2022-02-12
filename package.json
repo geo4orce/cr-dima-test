@@ -1,11 +1,11 @@
 {
   "name": "cr-dima-test",
-  "version": "2.5.1",
+  "version": "2.6.0",
   "description": "CR Dima Test Automation",
   "author": "Geo",
   "main": "index.js",
   "engines": {
-    "node": "14.15"
+    "node": "16.13"
   },
   "scripts": {
     "_clean": "rm -rf dist/*; rm -rf tmp/*",
