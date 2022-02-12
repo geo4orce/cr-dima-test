@@ -1,5 +1,17 @@
 # Changelog
 
+## v2.6.1 (Feb-12, 2022)
+
+- add default lists of links: cars brands and models (only POC for now)
+
+## v2.6.0 (Feb-11, 2022)
+
+- update node to v16.13
+- update npm to 8.1.2
+- update package-lock.json to "lockfileVersion": 2
+
+---
+
 ## v2.5.1 (Feb-14, 2021)
 
 - extract footer and header into v-once components

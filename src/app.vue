@@ -9,6 +9,15 @@
             <button @click="doParse" type="button" class="btn btn-lg btn-primary">
                 Save
             </button>
+            <button @click="doLoadDefaults" type="button" class="btn btn-lg btn-light">
+                Defaults
+            </button>
+            <button @click="doLoadBrands" type="button" class="btn btn-lg btn-light">
+                Car Brands
+            </button>
+            <button @click="doLoadModels" type="button" class="btn btn-lg btn-light">
+                Car Models
+            </button>
             <br/><br/>
             <label for="listStr" class="form-label">
                 List of URLs
@@ -21,15 +30,32 @@
         </div>
         <div v-else>
             <div>
-                <button @click="doEdit" type="button" class="btn btn-lg btn-secondary">
-                    Edit
-                </button>
-                <button v-if="isRunning" @click="doStop" type="button" class="btn btn-lg btn-danger">
+
+                <button
+                    v-if="isRunning"
+                    @click="doStop"
+                    class="btn btn-lg btn-danger"
+                    type="button"
+                >
                     Stop
                 </button>
-                <button v-else @click="doStart" type="button" class="btn btn-lg btn-primary">
+                <button
+                    v-else
+                    @click="doStart"
+                    class="btn btn-lg btn-primary"
+                    type="button"
+                >
                     Start
                 </button>
+
+                <button
+                    @click="doEdit"
+                    class="btn btn-lg btn-secondary"
+                    type="button"
+                >
+                    Edit
+                </button>
+
                 <div class="summary">
                     <span v-if="list.length" class="badge bg-dark">
                         Total: {{ list.length }}
@@ -88,15 +114,13 @@
 <script>
 import AppFooter from '/src/app/AppFooter.vue';
 import AppHeader from '/src/app/AppHeader.vue';
+import urls_default from '/src/app/lists/urls_default';
+import urls_brands from '/src/app/lists/urls_brands';
+import urls_models from '/src/app/lists/urls_models';
 
 // "vue-template-compiler" must be installed as a prod dependency
 // "webpack-cli" must be installed as a prod dependency
 
-const DEFAULT_URLS = [
-    'https://www.consumerreports.org/cars/kia/', // 200 OK
-    'http://cr.org/burgers', // 404 with redirect
-    'bad.url', // no good
-].join("\n");
 const TESTING = 'testing...';
 
 const isTesting = (text) => {
@@ -125,7 +149,7 @@ export default {
             isEdit: true,
             isRunning: false,
             list: [],
-            listStr: localStorage.getItem('listStr') || DEFAULT_URLS,
+            listStr: localStorage.getItem('listStr') || this.parseLists(urls_default),
         };
     },
     computed: {
@@ -164,6 +188,9 @@ export default {
         },
     },
     methods: {
+        parseLists(arr) {
+            return arr.join("\n");
+        },
         getStatusColor(text) {
             if (isTesting(text)) {
                 return 'light';
@@ -194,6 +221,15 @@ export default {
                     url: item.trim(),
                 };
             }).filter(Boolean);
+        },
+        doLoadDefaults() {
+            this.listStr = this.parseLists(urls_default);
+        },
+        doLoadBrands() {
+            this.listStr = this.parseLists(urls_brands);
+        },
+        doLoadModels() {
+            this.listStr = this.parseLists(urls_models);
         },
         doEdit() {
             this.doStop(); // just in case
