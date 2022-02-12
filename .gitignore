@@ -12,3 +12,6 @@
 
 # mac
 .DS_Store
+
+# jet brains
+.idea/
