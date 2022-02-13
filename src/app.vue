@@ -15,9 +15,6 @@
             <button @click="doLoadBrands" type="button" class="btn btn-lg btn-light">
                 Car Brands
             </button>
-            <button @click="doLoadModels" type="button" class="btn btn-lg btn-light">
-                Car Models
-            </button>
             <br/><br/>
             <label for="listStr" class="form-label">
                 List of URLs
@@ -25,7 +22,7 @@
             <textarea v-model="listStr" rows="10" id="listStr" class="form-control">
             </textarea>
             <div class="form-text">
-                One per line. Spacing doesn't matter.
+                One per line.
             </div>
         </div>
         <div v-else>

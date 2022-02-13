@@ -1,8 +1,13 @@
 # Changelog
 
+## v2.7.0 (Feb-12, 2022)
+
+- update list of car brands
+- add Procfile for heroku
+
 ## v2.6.1 (Feb-12, 2022)
 
-- add default lists of links: cars brands and models (only POC for now)
+- add default lists of links: cars brands and models
 
 ## v2.6.0 (Feb-11, 2022)
 

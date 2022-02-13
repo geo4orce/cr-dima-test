@@ -17,9 +17,9 @@ console.log(`webpack env is: "${ENV.NODE_ENV}", so mode is set to "${mode}"`);
 const PKG = require(ENV.ROOT + '/package.json');
 
 // deps
-const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const webpack = require('webpack');
+const {VueLoaderPlugin} = require('vue-loader');
 
 // export
 module.exports = {
@@ -36,7 +36,7 @@ module.exports = {
             ENV: JSON.stringify(ENV),
             PKG: JSON.stringify(PKG),
             'process.env': { // this is for vuejs
-                NODE_ENV: JSON.stringify(ENV.VUE_ENV ? ENV.VUE_ENV : 'production'),
+                NODE_ENV: JSON.stringify(mode),
             },
         }),
 

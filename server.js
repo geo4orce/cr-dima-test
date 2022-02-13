@@ -7,7 +7,7 @@ if (ENV.NODE_ENV !== 'production') {
 }
 // const PKG = require(ENV.ROOT + '/package.json');
 const PORT = ENV.PORT;
-const fetch = require("node-fetch");
+const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 
 // import deps
 const express = require('express');

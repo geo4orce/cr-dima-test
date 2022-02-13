@@ -1,14 +1,19 @@
 # CR DIMA TEST
 
-Ping a list of URLs to ensure they are alive.
+Ping a list of URLs to check the server response status.
 
-![example](docs/sample.png)
+(Please be patient 30+ seconds as heroku is warming up!)
 
 https://cr-dima-test.herokuapp.com/
 
+![example](docs/sample.png)
+
 ## Local Dev
 
+Install NVS: https://github.com/jasongin/nvs
+
 ```
+nvs use
 npm install
 npm run dev
 ```

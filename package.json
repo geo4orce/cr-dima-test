@@ -43,16 +43,16 @@
     ]
   },
   "dependencies": {
-    "css-loader": "^5",
-    "dotenv": "^8",
+    "css-loader": "^6",
+    "dotenv": "^16",
     "express": "^4",
     "html-webpack-plugin": "^5",
     "jquery": "^3",
-    "node-fetch": "^2",
-    "node-sass": "^7.0",
+    "node-fetch": "^3",
+    "node-sass": "^7",
     "postcss": "^8",
-    "sass-loader": "^11",
-    "style-loader": "^2",
+    "sass-loader": "^12",
+    "style-loader": "^3",
     "vue": "^2",
     "vue-loader": "^15",
     "vue-template-compiler": "^2",
@@ -60,8 +60,8 @@
     "webpack-cli": "^4"
   },
   "devDependencies": {
-    "concurrently": "^5",
-    "jest": "^26",
+    "concurrently": "^7",
+    "jest": "^27",
     "nodemon": "^2"
   },
   "private": true,

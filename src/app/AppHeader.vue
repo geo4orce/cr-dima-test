@@ -2,11 +2,8 @@
 <div class="header">
     <h1>{{ h1 }}</h1>
     <div class="subtext">
-        <div>
-            v{{ version }}
-        </div>
         <a href="https://github.com/geo4orce/cr-dima-test" target="_blank">
-            GitHub
+            v{{ version }}
         </a>
         <div v-if="env !== 'production'">
             Env: {{ env }}
